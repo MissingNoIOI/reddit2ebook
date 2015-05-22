@@ -15,47 +15,43 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     setup(
         name='reddit2ebook',
 
-        version='1.0.0'
+        version='1.0.0',
 
-    description = 'convert reddit stories and comments into ebooks',
-                  long_description = long_description,
+        description = 'convert reddit stories and comments into ebooks',
+        long_description = long_description,
 
-                                     url = 'https://github.com/MissingNoIOI/reddit2ebook',
+        url = 'https://github.com/MissingNoIOI/reddit2ebook',
 
-                                           author = 'Gerrit Helling',
-                                                    author_email = 'gerrit@akuma.pictures',
+        author = 'Gerrit Helling',
+        author_email = 'gerrit@akuma.pictures',
 
-                                                                   license = 'GPLv3',
+        license = 'GPLv3',
 
-                                                                             classifiers = [
+        classifiers = [
 
-                                                                                               'Development Status :: 2 - Beta',
+            'Development Status :: 2 - Beta',
 
-                                                                                               'Intended Audience :: End Users/Desktop'
-                                                                                               'Topic :: Multimedia'
+            'Intended Audience :: End Users/Desktop',
+            'Topic :: Multimedia',
 
+            'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
 
-                                                                                               'License :: OSI Approved :: GNU General Public License v3 (GPLv3)'
+            'Programming Language :: Python :: 3',
+            'Programming Language :: Python :: 3.2',
+            'Programming Language :: Python :: 3.3',
+            'Programming Language :: Python :: 3.4',
+        ],
 
-                                                                                               'Programming Language :: Python :: 3',
-                                                                                               'Programming Language :: Python :: 3.2',
-                                                                                               'Programming Language :: Python :: 3.3',
-                                                                                               'Programming Language :: Python :: 3.4',
-                                                                                           ],
+        keywords = 'reddit ebook epub pandoc offline',
 
-                                                                                           keywords = 'reddit ebook epub pandoc offline',
+        install_requires = [
+            'pypandoc',
+            'praw',
+            'PyYaml'],
 
-                                                                                                      packages = find_packages(
-        exclude=['contrib', 'docs', 'tests*']),
-
-                                                                                                                 install_requires = [
-                                                                                                                                        'pypandoc',
-                                                                                                                                        'praw',
-                                                                                                                                        'PyYaml'],
-
-                                                                                                                                    entry_points = {
-                                                                                                                                                       'console_scripts': [
-                                                                                                                                                           'reddit2ebook=reddit2ebook:main',
-                                                                                                                                                       ],
-                                                                                                                                                   },
+        entry_points = {
+            'console_scripts': [
+                'reddit2ebook=reddit2ebook:main',
+            ],
+        },
     )
