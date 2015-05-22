@@ -15,7 +15,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     setup(
         name='reddit2ebook',
 
-        version='1.0.7',
+        version='1.1.0',
 
         description = 'convert reddit stories and comments into ebooks',
         long_description = long_description,
@@ -49,7 +49,8 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
         install_requires = [
             'pypandoc',
             'praw',
-            'PyYaml'],
+            'PyYaml',
+            'pyprind'],
 
         entry_points = {
             'console_scripts': [
