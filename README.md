@@ -18,7 +18,7 @@ Requirements: PyYaml. pypandoc and praw
      - url
 ```
 
-It can be insatlled via pip:
+It can be installed via pip:
 
 ```
 pip install reddit2ebook
