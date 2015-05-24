@@ -4,6 +4,7 @@ import sys
 import praw
 import pypandoc
 import warnings
+import os
 from yaml import load
 from pyprind import ProgBar
 
@@ -13,8 +14,12 @@ def main():
     directory = sys.argv[2]
 
     # Check if the directory has a trailing slash
-    if directory.split('/')[-1] != '':
-        directory = directory + '/'
+    if os.name == 'nt' or os.name == 'os2':
+            if directory.split('\\')[-1] != '':
+                directory += '\\'
+    else:
+            if directory.split('/')[-1] != '':
+                directory += '/'
 
     # Disable warnings due to a bug in praw
     warnings.filterwarnings("ignore")
