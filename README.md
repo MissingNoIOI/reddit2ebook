@@ -24,4 +24,3 @@ It can be installed via pip:
 pip install reddit2ebook
 ```
 
-Attendtion: Due to a bug in pypandoc this script currently doesn't work on Windows

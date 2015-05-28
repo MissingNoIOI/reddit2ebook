@@ -15,7 +15,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     setup(
         name='reddit2ebook',
 
-        version='1.1.0',
+        version='1.2.1',
 
         description = 'convert reddit stories and comments into ebooks',
         long_description = long_description,
@@ -31,10 +31,14 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
             'Development Status :: 4 - Beta',
 
+            'Environment :: Console',
+
             'Intended Audience :: End Users/Desktop',
             'Topic :: Multimedia',
 
             'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
+
+            'Operating System :: OS Independent',
 
             'Programming Language :: Python :: 3',
             'Programming Language :: Python :: 3.2',

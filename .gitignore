@@ -13,6 +13,7 @@ sdist
 examples
 develop-eggs
 .installed.cfg
+pip-selfcheck.json
 
 # Installer logs
 pip-log.txt

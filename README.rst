@@ -1,7 +1,7 @@
 
 Convert stories and comments from reddit into epubs using pandoc
 
-Requirements: PyYaml. pypandoc and praw::
+Requirements: PyYaml. pyprind and praw::
 
  Usage: reddit2ebook initfile output-directory
 
