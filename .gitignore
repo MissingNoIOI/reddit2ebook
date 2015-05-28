@@ -10,6 +10,7 @@ parts
 bin
 var
 sdist
+examples
 develop-eggs
 .installed.cfg
 
@@ -40,3 +41,5 @@ Scripts
 
 # MacOSX
 .DS_Store
+
+.idea*
