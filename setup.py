@@ -47,7 +47,6 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
         packages = find_packages(),
 
         install_requires = [
-            'pypandoc',
             'praw',
             'PyYaml',
             'pyprind'],
