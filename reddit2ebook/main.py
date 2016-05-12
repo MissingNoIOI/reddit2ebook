@@ -4,11 +4,12 @@ import sys
 import praw
 import warnings
 import argparse
+import os
 from yaml import load
 from pyprind import ProgBar
 import mistune
-# TODO: Rewrite it for ebooklib since pypub doesnt support python3
-import pypub
+import uuid
+from ebooklib import epub
 
 
 def main():
@@ -19,7 +20,7 @@ def main():
     parser.add_argument('output_directory')
     args = parser.parse_args()
 
-    config_file = args.configfile
+    config_file = args.config_file
     directory = args.output_directory
 
     # Disable warnings due to a bug in praw
@@ -31,29 +32,69 @@ def main():
     markdown = mistune.Markdown(renderer=renderer)
 
     for bookname in config.keys():
-        epub = pypub.Epub(bookname)
         print("Creating ebook")
         bar = ProgBar(len(config[bookname]))
+
+        book = epub.EpubBook()
+        # The epub standard requires an unique identifier, this is normally
+        # the ISBN, but since we dont have one we generate an UUID
+        book.set_identifier(uuid.uuid4().hex)
+        # TODO: Find a nice way to specify the language
+        book.set_language('en')
+        book.set_title(bookname)
+
+        chapter_number = 1
+        chapters = []
+
         for url in config[bookname]:
             bar.update()
             # Check if the link is a comment or a submission
             # Submissions have a trailing slash
             if url.split('/')[-1] == '':
                 submission = get_submission_text(reader, url)
-                chapter = pypub.create_chapter_from_string(
-                    markdown(submission[1]),
-                    title=submission[0]
+                chapter = create_chapter(
+                    body=markdown(submission[1]),
+                    title=submission[0],
+                    filename="chapter" + str(chapter_number) + ".xhtml"
                 )
             else:
                 comment = get_comment_text(reader, url)
-                chapter = pypub.create_chapter_from_string(
-                    markdown(comment[1]),
-                    title="Comment by " + comment[0]
+                chapter = create_chapter(
+                    body=markdown(comment[1]),
+                    title="Comment by " + comment[0],
+                    filename="chapter" + str(chapter_number) + ".xhtml"
                 )
 
-            epub.add_chapter(chapter)
+            chapters.append(chapter)
 
-        epub.create_epub(directory, epub_name=bookname)
+            book.add_item(chapter)
+
+            chapter_number += 1
+
+        book.toc = chapters
+        book.add_item(epub.EpubNcx())
+        book.add_item(epub.EpubNav())
+
+        style = load_css()
+        default_css = epub.EpubItem(
+            uid="style_default",
+            file_name="style/default.css",
+            media_type="text/css",
+            content=style)
+        book.add_item(default_css)
+
+        nav_css = epub.EpubItem(
+            uid="style_nav",
+            file_name="style/nav.css",
+            media_type="text/css",
+            content=style)
+        book.add_item(nav_css)
+
+        spine = ['nav'] + chapters
+
+        book.spine = spine
+
+        epub.write_epub(os.path.join(directory, bookname + ".epub"), book, {})
 
 
 def read_config_file(config_file):
@@ -85,6 +126,18 @@ def get_submission_text(reader, url):
     title = submission.title
     text = submission.selftext
     return (title, text)
+
+
+def create_chapter(title, body, filename):
+    chapter = epub.EpubHtml(title=title, file_name=filename)
+    chapter.content = body
+    return chapter
+
+
+def load_css():
+    with open("base.css", 'r') as f:
+        style = f.read()
+    return style
 
 if __name__ == "__main__":
     main()

@@ -15,7 +15,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     setup(
         name='reddit2ebook',
 
-        version='1.2.1',
+        version='2.0.0',
 
         description = 'convert reddit stories and comments into ebooks',
         long_description = long_description,
@@ -55,7 +55,8 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
             'PyYaml',
             'pypub',
             'mistune',
-            'pyprind'
+            'pyprind',
+            'ebooklib'
         ],
 
         entry_points = {
