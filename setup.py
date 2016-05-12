@@ -46,14 +46,17 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
             'Programming Language :: Python :: 3.4',
         ],
 
-        keywords = 'reddit ebook epub pandoc offline',
+        keywords = 'reddit ebook epub offline',
 
         packages = find_packages(),
 
         install_requires = [
             'praw',
             'PyYaml',
-            'pyprind'],
+            'pypub',
+            'mistune',
+            'pyprind'
+        ],
 
         entry_points = {
             'console_scripts': [
