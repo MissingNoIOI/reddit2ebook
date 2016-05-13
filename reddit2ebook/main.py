@@ -9,8 +9,9 @@ from yaml import load
 from pyprind import ProgBar
 import mistune
 import uuid
-from ebooklib import epub
+from .ebooklib_patched import epub
 from PIL import Image
+from pkg_resources import resource_string
 
 
 def main():
@@ -127,6 +128,8 @@ def main():
 
         epub.write_epub(os.path.join(directory, bookname + ".epub"), book, {})
 
+        print("Finished writing " + bookname + ".epub\n")
+
 
 def read_config_file(config_file):
     '''
@@ -168,8 +171,7 @@ def create_chapter(title, body, filename):
 def load_css():
     # Currently uses the Epub CSS starter kit as a sane default
     # https://github.com/mattharrison/epub-css-starter-kit/
-    with open("base.css", 'r') as f:
-        style = f.read()
+    style = resource_string(__name__, 'base.css')
     return style
 
 

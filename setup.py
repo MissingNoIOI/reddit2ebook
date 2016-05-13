@@ -27,6 +27,8 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
         license='GPLv3',
 
+        include_package_data=True,
+
         classifiers=[
 
             'Development Status :: 4 - Beta',
@@ -64,4 +66,5 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
                 'reddit2ebook=reddit2ebook.main:main',
             ],
         },
+
     )
