@@ -17,17 +17,17 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
         version='2.0.0',
 
-        description = 'convert reddit stories and comments into ebooks',
-        long_description = long_description,
+        description='convert reddit stories and comments into ebooks',
+        long_description=long_description,
 
-        url = 'https://github.com/MissingNoIOI/reddit2ebook',
+        url='https://github.com/MissingNoIOI/reddit2ebook',
 
-        author = 'Gerrit Helling',
-        author_email = 'gerrit@akuma.pictures',
+        author='Gerrit Helling',
+        author_email='gerrit@akuma.pictures',
 
-        license = 'GPLv3',
+        license='GPLv3',
 
-        classifiers = [
+        classifiers=[
 
             'Development Status :: 4 - Beta',
 
@@ -46,20 +46,20 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
             'Programming Language :: Python :: 3.4',
         ],
 
-        keywords = 'reddit ebook epub offline',
+        keywords='reddit ebook epub offline',
 
-        packages = find_packages(),
+        packages=find_packages(),
 
-        install_requires = [
+        install_requires=[
             'praw',
             'PyYaml',
             'pypub',
             'mistune',
             'pyprind',
-            'ebooklib'
+            'Pillow'
         ],
 
-        entry_points = {
+        entry_points={
             'console_scripts': [
                 'reddit2ebook=reddit2ebook.main:main',
             ],

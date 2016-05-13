@@ -10,6 +10,7 @@ from pyprind import ProgBar
 import mistune
 import uuid
 from ebooklib import epub
+from PIL import Image
 
 
 def main():
@@ -28,25 +29,55 @@ def main():
 
     reader = praw.Reddit(user_agent="reddit2ebook")
     config = read_config_file(config_file)
+    # We have to use xhtml here for Epubs
     renderer = mistune.Renderer(use_xhtml=True, escape=True)
     markdown = mistune.Markdown(renderer=renderer)
 
     for bookname in config.keys():
-        print("Creating ebook")
-        bar = ProgBar(len(config[bookname]))
-
         book = epub.EpubBook()
         # The epub standard requires an unique identifier, this is normally
         # the ISBN, but since we dont have one we generate an UUID
         book.set_identifier(uuid.uuid4().hex)
-        # TODO: Find a nice way to specify the language
-        book.set_language('en')
-        book.set_title(bookname)
 
         chapter_number = 1
         chapters = []
 
-        for url in config[bookname]:
+        if "links" in config[bookname]:
+            bar = ProgBar(
+                len(config[bookname]["links"]),
+                title="Creating ebook " + bookname + ".epub",
+                bar_char='█')
+
+            links = config[bookname]["links"]
+
+            if "cover" in config[bookname]:
+                convert_to_jpeg(config[bookname]["cover"])
+                with open("cover.jpg", 'rb') as f:
+                    book.set_cover("cover.jpg", f.read())
+                os.remove("cover.jpg")
+
+            if "author" in config[bookname]:
+                book.add_author(config[bookname]["author"])
+
+            if "lang" in config[bookname]:
+                book.set_language(config[bookname]["lang"])
+            else:
+                book.set_language('en')
+
+            if "title" in config[bookname]:
+                book.set_title(config[bookname]["title"])
+            else:
+                book.set_title(bookname)
+
+        else:
+            links = config[bookname]
+            book.set_language('en')
+            book.set_title(bookname)
+            bar = ProgBar(len(config[bookname]),
+                          title="Creating ebook " + bookname + ".epub",
+                          bar_char='█')
+
+        for url in links:
             bar.update()
             # Check if the link is a comment or a submission
             # Submissions have a trailing slash
@@ -90,7 +121,7 @@ def main():
             content=style)
         book.add_item(nav_css)
 
-        spine = ['nav'] + chapters
+        spine = ['cover', 'nav'] + chapters
 
         book.spine = spine
 
@@ -135,9 +166,16 @@ def create_chapter(title, body, filename):
 
 
 def load_css():
+    # Currently uses the Epub CSS starter kit as a sane default
+    # https://github.com/mattharrison/epub-css-starter-kit/
     with open("base.css", 'r') as f:
         style = f.read()
     return style
+
+
+def convert_to_jpeg(file_name):
+    im = Image.open(file_name)
+    im.save('cover.jpg')
 
 if __name__ == "__main__":
     main()
