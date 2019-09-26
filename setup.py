@@ -58,7 +58,9 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
             'pypub',
             'mistune',
             'pyprind',
-            'Pillow'
+            'Pillow',
+            'lxml',
+            'ebooklib',
         ],
 
         entry_points={
