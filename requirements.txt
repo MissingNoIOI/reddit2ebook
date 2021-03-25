@@ -13,7 +13,7 @@ praw==6.4.0
 prawcore==1.0.1
 PyPrind==2.11.2
 pypub==1.4
-PyYAML==5.1.2
+PyYAML==5.4
 requests==2.22.0
 six==1.12.0
 soupsieve==1.9.4
