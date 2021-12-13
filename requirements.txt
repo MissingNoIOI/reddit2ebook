@@ -4,7 +4,7 @@ chardet==3.0.4
 EbookLib==0.17.1
 idna==2.8
 Jinja2==2.10.1
-lxml==4.4.1
+lxml==4.6.5
 MarkupSafe==1.1.1
 mistune==0.8.4
 Pillow==6.1.0
